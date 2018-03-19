@@ -54,9 +54,17 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@types/classnames@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
+
 "@types/node@*":
   version "8.0.53"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
+
+"@types/react@^16.0.33":
+  version "16.0.40"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.40.tgz#caabc2296886f40b67f6fc80f0f3464476461df9"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -2338,6 +2346,10 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
+es6-promise@^4.1.0:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
+
 es6-set@~0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/es6-set/-/es6-set-0.1.5.tgz#d2b3ec5d4d800ced818db538d28974db0a73ccb1"
@@ -3000,6 +3012,15 @@ getpass@^0.1.1:
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
   dependencies:
     assert-plus "^1.0.0"
+
+giphy-js-sdk-core@^1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/giphy-js-sdk-core/-/giphy-js-sdk-core-1.0.3.tgz#a3c85f3671963e9a8719f3784fc0cedbdf8964e8"
+  dependencies:
+    es6-promise "^4.1.0"
+    isomorphic-fetch "^2.2.1"
+    lodash "^4.17.4"
+    promise "^7.1.1"
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -3707,7 +3728,7 @@ isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -6000,6 +6021,16 @@ react-event-listener@^0.5.1:
     fbjs "^0.8.16"
     prop-types "^15.6.0"
     warning "^3.0.0"
+
+react-giphy-selector@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-giphy-selector/-/react-giphy-selector-0.0.1.tgz#f9455c11b120d190b8e0d0b850fc535ad7941f0a"
+  dependencies:
+    "@types/classnames" "^2.2.3"
+    "@types/react" "^16.0.33"
+    classnames "^2.2.5"
+    giphy-js-sdk-core "^1.0.2"
+    react "^16.2.0"
 
 react-hotkeys@^0.10.0:
   version "0.10.0"

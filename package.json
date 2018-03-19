@@ -84,6 +84,7 @@
     "rails-ujs": "^5.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-giphy-selector": "^0.0.1",
     "react-hotkeys": "^0.10.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-immutable-pure-component": "^1.1.1",

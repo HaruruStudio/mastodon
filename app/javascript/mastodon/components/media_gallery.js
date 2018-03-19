@@ -64,20 +64,12 @@ class Item extends React.PureComponent {
   render () {
     const { attachment, index, size, standalone } = this.props;
 
-    let width  = 50;
+    let width  = 100;
     let height = 100;
     let top    = 'auto';
     let left   = 'auto';
     let bottom = 'auto';
     let right  = 'auto';
-
-    if (size === 1) {
-      width = 100;
-    }
-
-    if (size === 4 || (size === 3 && index > 0)) {
-      height = 50;
-    }
 
     if (size === 2) {
       if (index === 0) {
@@ -145,7 +137,7 @@ class Item extends React.PureComponent {
             sizes={sizes}
             alt={attachment.get('description')}
             title={attachment.get('description')}
-            style={{ objectPosition: `${x}% ${y}%` }}
+            style={{ objectPosition: `${x}% ${y}%`, maxHeight: '500px' } }
           />
         </a>
       );
@@ -237,17 +229,7 @@ export default class MediaGallery extends React.PureComponent {
     let children;
 
     const style = {};
-
-    if (this.isStandaloneEligible()) {
-      if (width) {
-        style.height = width / this.props.media.getIn([0, 'meta', 'small', 'aspect']);
-      }
-    } else if (width) {
-      style.height = width / (16/9);
-    } else {
-      style.height = height;
-    }
-
+    
     if (!visible) {
       let warning;
 
@@ -264,12 +246,12 @@ export default class MediaGallery extends React.PureComponent {
         </button>
       );
     } else {
-      const size = media.take(4).size;
+      const size = media.take(11).size;
 
       if (this.isStandaloneEligible()) {
         children = <Item standalone onClick={this.handleClick} attachment={media.get(0)} />;
       } else {
-        children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} onClick={this.handleClick} attachment={attachment} index={i} size={size} />);
+        children = media.take(11).map((attachment, i) => <Item key={attachment.get('id')} onClick={this.handleClick} attachment={attachment} index={i} size={size} />);
       }
     }
 
