@@ -52,8 +52,6 @@ export default class ActionBar extends React.PureComponent {
     let menu = [];
     let extraInfo = '';
 
-    menu.push({ text: intl.formatMessage(messages.mention, { name: account.get('username') }), action: this.props.onMention });
-
     if ('share' in navigator) {
       menu.push({ text: intl.formatMessage(messages.share, { name: account.get('username') }), action: this.handleShare });
     }
