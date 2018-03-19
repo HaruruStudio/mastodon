@@ -148,6 +148,7 @@ RSpec.describe PostStatusService do
           Fabricate(:media_attachment, account: account),
           Fabricate(:media_attachment, account: account),
           Fabricate(:media_attachment, account: account),
+          Fabricate(:media_attachment, account: account),
         ].map(&:id),
       )
     end.to raise_error(

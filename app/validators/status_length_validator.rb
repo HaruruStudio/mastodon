@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class StatusLengthValidator < ActiveModel::Validator
-  MAX_CHARS = 500
+  MAX_CHARS = 1
 
   def validate(status)
     return unless status.local? && !status.reblog?
-    status.errors.add(:text, I18n.t('statuses.over_character_limit', max: MAX_CHARS)) if too_long?(status)
+    status.errors.add(:text, '文字は投稿できません') if status.text != '.' or status.with_media? == false
   end
 
   private

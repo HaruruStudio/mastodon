@@ -163,7 +163,7 @@ export function submitComposeFail(error) {
 
 export function uploadCompose(files) {
   return function (dispatch, getState) {
-    if (getState().getIn(['compose', 'media_attachments']).size > 3) {
+    if (getState().getIn(['compose', 'media_attachments']).size > 11) {
       return;
     }
 
