@@ -18,6 +18,7 @@ import { isMobile } from '../../../is_mobile';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
 import { countableText } from '../util/counter';
+import { uploadCompose } from './../../../actions/compose'
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -146,7 +147,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     const { intl, onPaste, showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
-    const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
+    const disabledButton = disabled || this.props.is_uploading || length(text) > 0 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
     let publishText = '';
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
@@ -169,12 +170,12 @@ export default class ComposeForm extends ImmutablePureComponent {
         </Collapsable>
 
         <ReplyIndicatorContainer />
-
+        
         <div className='compose-form__autosuggest-wrapper'>
           <AutosuggestTextarea
             ref={this.setAutosuggestTextarea}
             placeholder={intl.formatMessage(messages.placeholder)}
-            disabled={disabled}
+            disabled={true}
             value={this.props.text}
             onChange={this.handleChange}
             suggestions={this.props.suggestions}
@@ -185,8 +186,6 @@ export default class ComposeForm extends ImmutablePureComponent {
             onPaste={onPaste}
             autoFocus={!showSearch && !isMobile(window.innerWidth)}
           />
-
-          <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
         </div>
 
         <div className='compose-form__modifiers'>
@@ -198,9 +197,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
-            <SpoilerButtonContainer />
           </div>
-          <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
 
         <div className='compose-form__publish'>
