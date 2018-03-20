@@ -57,3 +57,5 @@ yarn-debug.log
 # Ignore Docker option files
 docker-compose.override.yml
 
+# Ignore Giphy key
+picto.config.js

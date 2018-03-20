@@ -66,6 +66,7 @@
     "mark-loader": "^0.1.6",
     "marky": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "node-config": "^0.0.2",
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "npmlog": "^4.1.2",
