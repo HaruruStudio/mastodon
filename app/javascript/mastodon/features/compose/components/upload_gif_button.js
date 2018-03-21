@@ -42,7 +42,6 @@ export default class UploadGifButton extends ImmutablePureComponent {
   handleChange = (e) => {
     axios.get(e.images.downsized.gif_url, { responseType: 'arraybuffer' })
       .then((response) => {
-        console.log(response);
         const file = new File([response.data], 'gif.gif');
         this.props.onSelectFile([file]);
       });
