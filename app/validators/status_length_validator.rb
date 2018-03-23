@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class StatusLengthValidator < ActiveModel::Validator
-  MAX_CHARS = 1
+  MAX_CHARS = 500
 
   def validate(status)
     return unless status.local? && !status.reblog?
-    status.errors.add(:text, '文字は投稿できません') if status.text != '.' or status.with_media? == false
+    status.errors.add(:text, non_tag_status?(status)) if status.with_media? === false or non_tag_status?(status) === true or too_long?(status)
   end
 
   private
+  def non_tag_status?(status)
+    return false if status.text === '.' or status.text.delete('#' + Extractor.extract_hashtags(status.text).join('|#')).gsub(/\s/, '') === ''
+    return true
+  end
 
   def too_long?(status)
     countable_length(status) > MAX_CHARS
