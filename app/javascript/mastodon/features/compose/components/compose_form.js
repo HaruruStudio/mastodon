@@ -148,7 +148,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     const { intl, onPaste, showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
-    const disabledButton = disabled || this.props.is_uploading || length(text) > 0 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
+    const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
     let publishText = '';
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
@@ -176,7 +176,7 @@ export default class ComposeForm extends ImmutablePureComponent {
           <AutosuggestTextarea
             ref={this.setAutosuggestTextarea}
             placeholder={intl.formatMessage(messages.placeholder)}
-            disabled={true}
+            disabled={disabled}
             value={this.props.text}
             onChange={this.handleChange}
             suggestions={this.props.suggestions}
@@ -199,6 +199,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
           </div>
+          <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
 
         <div className='compose-form__publish'>
