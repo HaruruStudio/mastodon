@@ -5,7 +5,9 @@ class StatusLengthValidator < ActiveModel::Validator
 
   def validate(status)
     return unless status.local? && !status.reblog?
-    status.errors.add(:text, non_tag_status?(status)) if status.with_media? === false or non_tag_status?(status) === true or too_long?(status)
+    status.errors.add(:text, ': 画像が1枚以上必要です') if status.with_media? === false
+    status.errors.add(:text, ': タグ以外を投稿文字列に含むことはできません') if non_tag_status?(status)
+    status.errors.add(:text, ': 最大文字数は500文字です') if too_long?(status)
   end
 
   private
