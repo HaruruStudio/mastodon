@@ -198,7 +198,6 @@ export default class AutosuggestTextarea extends ImmutablePureComponent {
       <div className='autosuggest-textarea'>
         <label>
           <span style={{ display: 'none' }}>{placeholder}</span>
-
           <Textarea
             inputRef={this.setTextarea}
             className='autosuggest-textarea__textarea'

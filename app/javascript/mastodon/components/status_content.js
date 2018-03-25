@@ -119,13 +119,12 @@ export default class StatusContent extends React.PureComponent {
 
   render () {
     const { status } = this.props;
-
+    // console.log(status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', ''));
     if (status.get('content').length === 0) {
       return null;
     }
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
-    console.log(status.get('contentHtml'));
     const content = { __html: status.get('contentHtml') === '<p>.</p>' ? '' : status.get('contentHtml') };
     const spoilerContent = { __html: status.get('spoilerHtml') };
     const directionStyle = { direction: 'ltr' };
@@ -154,16 +153,18 @@ export default class StatusContent extends React.PureComponent {
       }
 
       return (
-        <div className={classNames} ref={this.setRef} tabIndex='0' style={directionStyle} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
-          <p style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}>
-            <span dangerouslySetInnerHTML={spoilerContent} />
-            {' '}
-            <button tabIndex='0' className='status__content__spoiler-link' onClick={this.handleSpoilerClick}>{toggleText}</button>
-          </p>
+        <div style={{backgroundColor: status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0] ? status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', '') : '#ffffff' }}>
+          <div className={classNames} ref={this.setRef} tabIndex='0' style={directionStyle} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
+            <p style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}>
+              <span dangerouslySetInnerHTML={spoilerContent} />
+              {' '}
+              <button tabIndex='0' className='status__content__spoiler-link' onClick={this.handleSpoilerClick}>{toggleText}</button>
+            </p>
 
-          {mentionsPlaceholder}
+            {mentionsPlaceholder}
 
-          <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''}`} style={directionStyle} dangerouslySetInnerHTML={content} />
+            <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''}`} style={directionStyle} dangerouslySetInnerHTML={content} />
+          </div>
         </div>
       );
     } else if (this.props.onClick) {
