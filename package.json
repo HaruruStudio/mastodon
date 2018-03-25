@@ -84,6 +84,7 @@
     "punycode": "^2.1.0",
     "rails-ujs": "^5.1.2",
     "react": "^16.2.0",
+    "react-color": "^2.14.0",
     "react-dom": "^16.2.0",
     "react-giphy-selector": "^0.0.1",
     "react-hotkeys": "^0.10.0",

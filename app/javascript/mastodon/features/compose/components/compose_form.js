@@ -20,6 +20,7 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
 import { countableText } from '../util/counter';
 import { uploadCompose } from './../../../actions/compose'
+import { SketchPicker } from 'react-color';
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -144,6 +145,10 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.props.onPickEmoji(position, data);
   }
 
+  handleChangeComplete = (color) => {
+    this.autosuggestTextarea.textarea.value = `[${color.hex}] ${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')[0]}`;
+  }
+
   render () {
     const { intl, onPaste, showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
@@ -171,7 +176,6 @@ export default class ComposeForm extends ImmutablePureComponent {
         </Collapsable>
 
         <ReplyIndicatorContainer />
-        
         <div className='compose-form__autosuggest-wrapper'>
           <AutosuggestTextarea
             ref={this.setAutosuggestTextarea}
@@ -205,7 +209,7 @@ export default class ComposeForm extends ImmutablePureComponent {
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>
-
+        <SketchPicker onChangeComplete={ this.handleChangeComplete } />
         <UploadGifButtonContainer />
       </div>
     );
