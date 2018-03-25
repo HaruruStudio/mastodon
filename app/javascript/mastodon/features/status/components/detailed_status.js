@@ -103,9 +103,14 @@ export default class DetailedStatus extends ImmutablePureComponent {
         </span>
       </Link>);
     }
-
+    
+    let color = '#ffffff';
+    if (status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== undefined && status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== null) {
+      console.log(status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/));
+      color = status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', ''); 
+    }
     return (
-      <div className='detailed-status'>
+      <div className='detailed-status' style={{  backgroundColor: color }}>
         <a href={status.getIn(['account', 'url'])} onClick={this.handleAccountClick} className='detailed-status__display-name'>
           <div className='detailed-status__display-avatar'><Avatar account={status.get('account')} size={48} /></div>
           <DisplayName account={status.get('account')} />
