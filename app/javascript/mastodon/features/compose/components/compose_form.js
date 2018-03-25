@@ -164,7 +164,7 @@ export default class ComposeForm extends ImmutablePureComponent {
   }
 
   handleChangeColor = (color) => {
-    this.autosuggestTextarea.textarea.value = `[${color.hex}] ${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')[0]}`;
+    this.autosuggestTextarea.textarea.value = `[${color.hex.slice(1)}] ${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')}`;
     this.setState({ color: color.rgb })
   }
 
@@ -240,6 +240,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             onPaste={onPaste}
             autoFocus={!showSearch && !isMobile(window.innerWidth)}
           />
+          <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
         </div>
 
         <div className='compose-form__modifiers'>
@@ -260,6 +261,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
+            <SpoilerButtonContainer />
           </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
