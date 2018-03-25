@@ -104,10 +104,9 @@ export default class DetailedStatus extends ImmutablePureComponent {
       </Link>);
     }
     
-    let color = '#ffffff';
+    let color = '#282c37';
     if (status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== undefined && status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== null) {
-      console.log(status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/));
-      color = status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', ''); 
+      color =  `#${status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', '')}`; 
     }
     return (
       <div className='detailed-status' style={{  backgroundColor: color }}>
