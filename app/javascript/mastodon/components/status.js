@@ -223,13 +223,19 @@ export default class Status extends ImmutablePureComponent {
       moveUp: this.handleHotkeyMoveUp,
       moveDown: this.handleHotkeyMoveDown,
     };
-
+    let color = '#ffffff';
+    if (status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== undefined && status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== null) {
+      console.log(status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/));
+      color = status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', ''); 
+    }
+    let colorStyle = {};
+    colorStyle.backgroundColor = color;
     return (
       <HotKeys handlers={handlers}>
         <div className={classNames('status__wrapper', `status__wrapper-${status.get('visibility')}`, { focusable: !this.props.muted })} tabIndex={this.props.muted ? null : 0}>
           {prepend}
 
-          <div className={classNames('status', `status-${status.get('visibility')}`, { muted: this.props.muted })} data-id={status.get('id')}>
+          <div className={classNames('status', `status-${status.get('visibility')}`, { muted: this.props.muted })} data-id={status.get('id')} style={colorStyle}>
             <div className='status__info'>
               <a href={status.get('url')} className='status__relative-time' target='_blank' rel='noopener'><RelativeTimestamp timestamp={status.get('created_at')} /></a>
 
