@@ -101,6 +101,7 @@
     "react-swipeable-views": "^0.12.3",
     "react-textarea-autosize": "^5.2.1",
     "react-toggle": "^4.0.1",
+    "reactcss": "^1.2.3",
     "redis": "^2.7.1",
     "redux": "^3.7.1",
     "redux-immutable": "^4.0.0",
