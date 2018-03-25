@@ -20,7 +20,8 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
 import { countableText } from '../util/counter';
 import { uploadCompose } from './../../../actions/compose'
-import { SketchPicker } from 'react-color';
+import reactCSS from 'reactcss'
+import { SketchPicker } from 'react-color'
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -31,6 +32,15 @@ const messages = defineMessages({
 
 @injectIntl
 export default class ComposeForm extends ImmutablePureComponent {
+  state = {
+    displayColorPicker: false,
+    color: {
+      r: '255',
+      g: '255',
+      b: '255',
+      a: '1',
+    },
+  };
 
   static propTypes = {
     intl: PropTypes.object.isRequired,
@@ -144,9 +154,18 @@ export default class ComposeForm extends ImmutablePureComponent {
     this._restoreCaret = position + emojiChar.length + 1;
     this.props.onPickEmoji(position, data);
   }
+  
+  handleClick = () => {
+    this.setState({ displayColorPicker: !this.state.displayColorPicker })
+  }
 
-  handleChangeComplete = (color) => {
+  handleClose = () => {
+    this.setState({ displayColorPicker: false })
+  }
+
+  handleChangeColor = (color) => {
     this.autosuggestTextarea.textarea.value = `[${color.hex}] ${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')[0]}`;
+    this.setState({ color: color.rgb })
   }
 
   render () {
@@ -155,6 +174,36 @@ export default class ComposeForm extends ImmutablePureComponent {
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
     const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
     let publishText = '';
+    const styles = reactCSS({
+      'default': {
+        color: {
+          width: '14px',
+          height: '14px',
+          borderRadius: '2px',
+          background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
+        },
+        swatch: {
+          padding: '5px',
+          background: '#fff',
+          borderRadius: '1px',
+          boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+          display: 'inline-block',
+          cursor: 'pointer',
+        },
+        popover: {
+          position: 'absolute',
+          zIndex: '5',
+        },
+        cover: {
+          position: 'fixed',
+          top: '0px',
+          right: '0px',
+          bottom: '0px',
+          left: '0px',
+        },
+      },
+    });
+
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
       publishText = <span className='compose-form__publish-private'><i className='fa fa-lock' /> {intl.formatMessage(messages.publish)}</span>;
@@ -199,6 +248,15 @@ export default class ComposeForm extends ImmutablePureComponent {
 
         <div className='compose-form__buttons-wrapper'>
           <div className='compose-form__buttons'>
+            <div>
+              <div style={ styles.swatch } onClick={ this.handleClick }>
+                <div style={ styles.color } />
+              </div>
+              { this.state.displayColorPicker ? <div style={ styles.popover }>
+                <div style={ styles.cover } onClick={ this.handleClose }/>
+                <SketchPicker color={ this.state.color } onChange={ this.handleChangeColor } />
+              </div> : null }
+            </div>
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
@@ -209,7 +267,6 @@ export default class ComposeForm extends ImmutablePureComponent {
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>
-        <SketchPicker onChangeComplete={ this.handleChangeComplete } />
         <UploadGifButtonContainer />
       </div>
     );
