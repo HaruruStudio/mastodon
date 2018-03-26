@@ -164,7 +164,7 @@ export default class ComposeForm extends ImmutablePureComponent {
   }
 
   handleChangeColor = (color) => {
-    this.autosuggestTextarea.textarea.value = `[${color.hex.slice(1)}] ${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')}`;
+    this.autosuggestTextarea.textarea.value = `[${color.hex.slice(1)}]${this.autosuggestTextarea.textarea.value.replace(/\[.+?\]/, '')}`;
     this.setState({ color: color.rgb })
   }
 
