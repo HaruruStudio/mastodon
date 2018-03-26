@@ -227,7 +227,6 @@ export default class Status extends ImmutablePureComponent {
     if (status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== undefined && status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== null) {
       color =  `#${status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', '')}`; 
     }
-    console.log(status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/\[.+?\]/, ''))
     let colorStyle = {};
     colorStyle.backgroundColor = color;
     return (
