@@ -35,9 +35,9 @@ export default class ComposeForm extends ImmutablePureComponent {
   state = {
     displayColorPicker: false,
     color: {
-      r: '255',
-      g: '255',
-      b: '255',
+      r: '40',
+      g: '44',
+      b: '55',
       a: '1',
     },
   };
