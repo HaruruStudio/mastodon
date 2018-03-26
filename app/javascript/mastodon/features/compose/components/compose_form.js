@@ -30,6 +30,15 @@ const messages = defineMessages({
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
 });
 
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 @injectIntl
 export default class ComposeForm extends ImmutablePureComponent {
   state = {
@@ -247,7 +256,7 @@ export default class ComposeForm extends ImmutablePureComponent {
           <UploadFormContainer />
         </div>
 
-        <div className='compose-form__buttons-wrapper'>
+        <div className='compose-form__buttons-wrapper' style={{backgroundColor: rgbToHex(this.state.color.r, this.state.color.g, this.state.color.b)}}>
           <div className='compose-form__buttons'>
             <div>
               <div style={ styles.swatch } onClick={ this.handleClick }>
