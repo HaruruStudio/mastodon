@@ -68,7 +68,6 @@ export default class DetailedStatus extends ImmutablePureComponent {
           />
         );
       } else {
-        console.log(status.get('media_attachments'));
         media = (
           <MediaGallery
             standalone
