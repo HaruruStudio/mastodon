@@ -5,6 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :web, safe_join([fa_icon('chevron-left fw'), t('settings.back')]), root_url
 
     primary.item :settings, safe_join([fa_icon('cog fw'), t('settings.settings')]), settings_profile_url do |settings|
+      settings.item :custom_emojis, safe_join([fa_icon('smile-o fw'), t('admin.custom_emojis.title')]), admin_custom_emojis_url, highlights_on: %r{/admin/custom_emojis}
       settings.item :profile, safe_join([fa_icon('user fw'), t('settings.edit_profile')]), settings_profile_url, highlights_on: %r{/settings/profile|/settings/migration}
       settings.item :preferences, safe_join([fa_icon('sliders fw'), t('settings.preferences')]), settings_preferences_url
       settings.item :notifications, safe_join([fa_icon('bell fw'), t('settings.notifications')]), settings_notifications_url

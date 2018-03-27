@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
 module Admin
-  class CustomEmojisController < BaseController
-    before_action :set_custom_emoji, except: [:index, :new, :create]
+  class CustomEmojisController < ApplicationController
+    include Authorization
+    include AccountableConcern
+
+    layout 'admin'
+    before_action :require_admin!, :set_custom_emoji, except: [:index, :new, :create]
     before_action :set_filter_params
 
     def index
-      authorize :custom_emoji, :index?
       @custom_emojis = filtered_custom_emojis.eager_load(:local_counterpart).page(params[:page])
     end
 
     def new
-      authorize :custom_emoji, :create?
       @custom_emoji = CustomEmoji.new
     end
 
     def create
-      authorize :custom_emoji, :create?
-
       @custom_emoji = CustomEmoji.new(resource_params)
+      @custom_emoji.disabled = true
 
       if @custom_emoji.save
         log_action :create, @custom_emoji
@@ -97,6 +98,10 @@ module Admin
 
     def filtered_custom_emojis
       CustomEmojiFilter.new(filter_params).results
+    end
+
+    def require_admin!
+      redirect_to admin_custom_emojis_path, notice: I18n.t('admin.statuses.failed_to_execute') unless current_user&.admin?
     end
 
     def filter_params
