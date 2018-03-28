@@ -23,6 +23,8 @@
 #  account_id             :integer          not null
 #  application_id         :integer
 #  in_reply_to_account_id :integer
+#  lat                    :decimal(17, 14)
+#  lon                    :decimal(17, 14)
 #
 
 class Status < ApplicationRecord

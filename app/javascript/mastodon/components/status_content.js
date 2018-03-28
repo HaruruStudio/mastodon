@@ -122,9 +122,18 @@ export default class StatusContent extends React.PureComponent {
     if (status.get('content').length === 0) {
       return null;
     }
+    let map = '';
+    let lat = status.get('lat');
+    let lon = status.get('lon');
+    let content;
+    console.log(lat);
+    if (lat && lon) {
+      map = `<a href='https://maps.google.co.jp/maps?q="${lat},${lon} target='_blank'><img src='https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=15&size=200x100&sensor=false&key=AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M'></a>`;
+    }
 
+    content = { __html: status.get('contentHtml') === '<p>.</p>'  + map ? '' : status.get('contentHtml').replace(/\[([\da-fA-F]{6}|[\da-fA-F]{3})\]/, '') + map };
+    
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
-    const content = { __html: status.get('contentHtml') === '<p>.</p>' ? '' : status.get('contentHtml').replace(/\[([\da-fA-F]{6}|[\da-fA-F]{3})\]/, '') };
     const spoilerContent = { __html: status.get('spoilerHtml') };
     const directionStyle = { direction: 'ltr' };
     const classNames = classnames('status__content', {

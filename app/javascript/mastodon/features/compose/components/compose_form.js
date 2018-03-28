@@ -22,6 +22,7 @@ import { countableText } from '../util/counter';
 import { uploadCompose } from './../../../actions/compose'
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
+import LocationPicker from 'react-location-picker';
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -39,6 +40,11 @@ function rgbToHex(r, g, b) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
+const defaultPosition = {
+  lat: 35.685175,
+  lng: 139.7528
+};
+
 @injectIntl
 export default class ComposeForm extends ImmutablePureComponent {
   state = {
@@ -49,6 +55,8 @@ export default class ComposeForm extends ImmutablePureComponent {
       b: '55',
       a: '1',
     },
+    address: "選択してください",
+    position: ""
   };
 
   static propTypes = {
@@ -70,6 +78,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     onSuggestionSelected: PropTypes.func.isRequired,
     onChangeSpoilerText: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
+    onPickGeo: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
@@ -177,8 +186,15 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.setState({ color: color.rgb })
   }
 
+  handleLocationChange = ({position, address}) => {
+    this.setState({ position, address });
+    console.log(address,position);
+    this.props.onPickGeo(position.lat, position.lng);
+    
+  }
+
   render () {
-    const { intl, onPaste, showSearch, anyMedia } = this.props;
+    const { intl, onPaste, onPickGeo,showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
     const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
@@ -274,7 +290,17 @@ export default class ComposeForm extends ImmutablePureComponent {
           </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
-
+        <div>
+        <h1>{this.state.address}</h1>
+        <div>
+          <LocationPicker
+            containerElement={ <div style={ {height: '100%'} } /> }
+            mapElement={ <div style={ {height: '400px'} } /> }
+            defaultPosition={defaultPosition}
+            onChange={this.handleLocationChange}
+          />
+        </div>
+      </div>
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>
