@@ -24,6 +24,7 @@ import {
   COMPOSE_VISIBILITY_CHANGE,
   COMPOSE_COMPOSING_CHANGE,
   COMPOSE_EMOJI_INSERT,
+  COMPOSE_GEO_CHANGE,
   COMPOSE_UPLOAD_CHANGE_REQUEST,
   COMPOSE_UPLOAD_CHANGE_SUCCESS,
   COMPOSE_UPLOAD_CHANGE_FAIL,
@@ -58,6 +59,8 @@ const initialState = ImmutableMap({
   default_sensitive: false,
   resetFileKey: Math.floor((Math.random() * 0x10000)),
   idempotencyKey: null,
+  lat: null,
+  lon: null,
   tagHistory: ImmutableList(),
 });
 
@@ -147,6 +150,14 @@ const insertEmoji = (state, position, emojiData) => {
     idempotencyKey: uuid(),
   });
 };
+
+const setGeo = (state, lat, lon) => {
+  console.log(state,lat,lon);
+  return state.withMutations(map => {
+    map.set('lat', lat);
+    map.set('lon', lon);
+  })
+}
 
 const privacyPreference = (a, b) => {
   if (a === 'direct' || b === 'direct') {
@@ -280,6 +291,9 @@ export default function compose(state = initialState, action) {
     }
   case COMPOSE_EMOJI_INSERT:
     return insertEmoji(state, action.position, action.emoji);
+  case COMPOSE_GEO_CHANGE:
+  console.log(action);
+    return setGeo(state, action.lat, action.lon);
   case COMPOSE_UPLOAD_CHANGE_SUCCESS:
     return state
       .set('is_submitting', false)
