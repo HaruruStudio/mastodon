@@ -23,6 +23,8 @@ import { uploadCompose } from './../../../actions/compose'
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
 import LocationPicker from 'react-location-picker';
+import ReactModal from 'react-modal';
+import IconButton from '../../../components/icon_button';
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -55,8 +57,9 @@ export default class ComposeForm extends ImmutablePureComponent {
       b: '55',
       a: '1',
     },
-    address: "選択してください",
-    position: ""
+    address: '',
+    position: '',
+    showModal: false,
   };
 
   static propTypes = {
@@ -188,9 +191,20 @@ export default class ComposeForm extends ImmutablePureComponent {
 
   handleLocationChange = ({position, address}) => {
     this.setState({ position, address });
-    console.log(address,position);
     this.props.onPickGeo(position.lat, position.lng);
-    
+  }
+
+  handleLocationClear = ({position, address}) => {
+    this.setState({ position: '', address: '' });
+    this.props.onPickGeo(null, null);
+  }
+
+  handleOpenModal = () =>  {
+    this.setState({ showModal: true });
+  }
+  
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
   }
 
   render () {
@@ -283,6 +297,7 @@ export default class ComposeForm extends ImmutablePureComponent {
                 <SketchPicker color={ this.state.color } onChange={ this.handleChangeColor } />
               </div> : null }
             </div>
+            <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} onClick={this.handleOpenModal} size={20} />
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
@@ -291,21 +306,37 @@ export default class ComposeForm extends ImmutablePureComponent {
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
         <div>
-        <h1>{this.state.address}</h1>
-        <div>
-          <LocationPicker
-            containerElement={ <div style={ {height: '100%'} } /> }
-            mapElement={ <div style={ {height: '400px'} } /> }
-            defaultPosition={defaultPosition}
-            onChange={this.handleLocationChange}
-          />
-        </div>
+        <ReactModal 
+          isOpen={this.state.showModal}
+          contentLabel="Location Pick Modal"
+          style={{
+            overlay: {
+              zIndex: 100,
+            },
+            content: {
+              backgroundColor: '#282C37',
+            }
+          }}
+        >
+          <button onClick={this.handleCloseModal}>Close</button>
+          <h1>{this.state.address}</h1>
+          <button onClick={this.handleLocationClear}>クリア</button>
+          <div>
+            <LocationPicker
+              containerElement={ <div style={ {height: '100%'} } /> }
+              mapElement={ <div style={ {height: '500px'} } /> }
+              defaultPosition={defaultPosition}
+              onChange={this.handleLocationChange}
+            />
+          </div>
+        </ReactModal>
       </div>
+        <h1>{this.state.address}</h1>
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>
         <UploadGifButtonContainer />
-      </div>
+        </div>
     );
   }
 
