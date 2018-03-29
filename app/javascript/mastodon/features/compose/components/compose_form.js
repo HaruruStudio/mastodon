@@ -107,8 +107,8 @@ export default class ComposeForm extends ImmutablePureComponent {
       // Update the state to match the current text
       this.props.onChange(this.autosuggestTextarea.textarea.value);
     }
-
     this.props.onSubmit();
+    this.handleLocationClear();
   }
 
   onSuggestionsClearRequested = () => {
@@ -194,7 +194,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.props.onPickGeo(position.lat, position.lng);
   }
 
-  handleLocationClear = ({position, address}) => {
+  handleLocationClear = () => {
     this.setState({ position: '', address: '' });
     this.props.onPickGeo(null, null);
   }
