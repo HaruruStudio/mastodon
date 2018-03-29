@@ -152,7 +152,6 @@ const insertEmoji = (state, position, emojiData) => {
 };
 
 const setGeo = (state, lat, lon) => {
-  console.log(state,lat,lon);
   return state.withMutations(map => {
     map.set('lat', lat);
     map.set('lon', lon);
@@ -292,7 +291,6 @@ export default function compose(state = initialState, action) {
   case COMPOSE_EMOJI_INSERT:
     return insertEmoji(state, action.position, action.emoji);
   case COMPOSE_GEO_CHANGE:
-  console.log(action);
     return setGeo(state, action.lat, action.lon);
   case COMPOSE_UPLOAD_CHANGE_SUCCESS:
     return state
