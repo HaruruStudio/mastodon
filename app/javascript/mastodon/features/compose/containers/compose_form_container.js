@@ -57,8 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(uploadCompose(files));
   },
 
-  onPickGeo (lat, lon) {
-    dispatch(changeComposeGeo(lat, lon))
+  onPickGeo (lat, lon, address) {
+    dispatch(changeComposeGeo(lat, lon, address))
   },
 
   onPickEmoji (position, data) {

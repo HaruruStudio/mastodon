@@ -61,6 +61,7 @@ const initialState = ImmutableMap({
   idempotencyKey: null,
   lat: null,
   lon: null,
+  address: null,
   tagHistory: ImmutableList(),
 });
 
@@ -151,10 +152,11 @@ const insertEmoji = (state, position, emojiData) => {
   });
 };
 
-const setGeo = (state, lat, lon) => {
+const setGeo = (state, lat, lon, address) => {
   return state.withMutations(map => {
     map.set('lat', lat);
     map.set('lon', lon);
+    map.set('address', address);
   })
 }
 
@@ -291,7 +293,11 @@ export default function compose(state = initialState, action) {
   case COMPOSE_EMOJI_INSERT:
     return insertEmoji(state, action.position, action.emoji);
   case COMPOSE_GEO_CHANGE:
+<<<<<<< HEAD
     return setGeo(state, action.lat, action.lon);
+=======
+    return setGeo(state, action.lat, action.lon, action.address);
+>>>>>>> feature/lat-lng_toot
   case COMPOSE_UPLOAD_CHANGE_SUCCESS:
     return state
       .set('is_submitting', false)

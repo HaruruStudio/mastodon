@@ -117,6 +117,7 @@ export function submitCompose() {
       visibility: getState().getIn(['compose', 'privacy']),
       lat: getState().getIn(['compose', 'lat'], null),
       lon: getState().getIn(['compose', 'lon'], null),
+      address: getState().getIn(['compose', 'address'], null),
     }, {
       headers: {
         'Idempotency-Key': getState().getIn(['compose', 'idempotencyKey']),
@@ -437,11 +438,12 @@ export function changeComposeVisibility(value) {
   };
 };
 
-export function changeComposeGeo(lat, lon) {
+export function changeComposeGeo(lat, lon, address) {
   return {
     type: COMPOSE_GEO_CHANGE,
     lat,
     lon,
+    address,
   };
 };
 
