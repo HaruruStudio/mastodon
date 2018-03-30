@@ -55,7 +55,7 @@ export default class ComposeForm extends ImmutablePureComponent {
       r: '40',
       g: '44',
       b: '55',
-      a: '1',
+      a: '100',
     },
     address: '',
     position: '',
@@ -294,7 +294,7 @@ export default class ComposeForm extends ImmutablePureComponent {
               </div>
               { this.state.displayColorPicker ? <div style={ styles.popover }>
                 <div style={ styles.cover } onClick={ this.handleClose }/>
-                <SketchPicker color={this.state.color} onChange={this.handleChangeColor} presetColors={['#D0021B', '#F5A623', '#F8E71C', '#8B572A', '#7ED321', '#417505', '#BD10E0', '#9013FE', '#4A90E2', '#50E3C2', '#B8E986', '#000000', '#4A4A4A', '#9B9B9B', '#FFFFFF', '#282c37']} />
+                <SketchPicker color={this.state.color} onChange={this.handleChangeColor} />
               </div> : null }
             </div>
             <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} onClick={this.handleOpenModal} size={20} />
