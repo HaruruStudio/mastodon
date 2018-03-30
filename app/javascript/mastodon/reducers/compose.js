@@ -293,11 +293,7 @@ export default function compose(state = initialState, action) {
   case COMPOSE_EMOJI_INSERT:
     return insertEmoji(state, action.position, action.emoji);
   case COMPOSE_GEO_CHANGE:
-<<<<<<< HEAD
-    return setGeo(state, action.lat, action.lon);
-=======
     return setGeo(state, action.lat, action.lon, action.address);
->>>>>>> feature/lat-lng_toot
   case COMPOSE_UPLOAD_CHANGE_SUCCESS:
     return state
       .set('is_submitting', false)
