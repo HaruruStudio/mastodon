@@ -25,6 +25,7 @@
 #  in_reply_to_account_id :integer
 #  lat                    :decimal(17, 14)
 #  lon                    :decimal(17, 14)
+#  address                :string
 #
 
 class Status < ApplicationRecord
