@@ -34,7 +34,8 @@ class PostStatusService < BaseService
                                         language: LanguageDetector.instance.detect(text, account),
                                         application: options[:application],
                                         lat: options[:lat],
-                                        lon: options[:lon])
+                                        lon: options[:lon],
+                                        address: options[:address])
     end
 
     process_mentions_service.call(status)
