@@ -201,7 +201,7 @@ export default class ComposeForm extends ImmutablePureComponent {
   }
 
   handleOpenModal = () =>  {
-    this.setState({ showModal: true });
+    this.setState({ showModal: true, showOtherModal: false });
   }
   
   handleCloseModal = () => {
@@ -258,7 +258,7 @@ export default class ComposeForm extends ImmutablePureComponent {
       publishText = this.props.privacy !== 'unlisted' ? intl.formatMessage(messages.publishLoud, { publish: intl.formatMessage(messages.publish) }) : intl.formatMessage(messages.publish);
     }
 
-    const buttonStyle={cursor: 'pointer',marginTop: '10px', fontSize: '1.3em'};
+    const buttonStyle={cursor: 'pointer', marginTop: '10px', fontSize: '1.3em', textAlign: 'middle'};
 
     return (
       <div className='compose-form'>
@@ -305,7 +305,6 @@ export default class ComposeForm extends ImmutablePureComponent {
                 <SketchPicker color={this.state.color} onChange={this.handleChangeColor} />
               </div> : null }
             </div>
-            <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} onClick={this.handleOpenModal} size={20} />
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
@@ -350,17 +349,33 @@ export default class ComposeForm extends ImmutablePureComponent {
               },
               content: {
                 backgroundColor: '#282C37',
+                display: 'table-cell',
               }
             }}
           >
-            <Button text='閉じる' onClick={this.handleCloseOtherModal} block />
-            <hr/>
-            <h1 style={{fontSize: '1.85em'}}>投稿</h1>
-            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} size={30} />画像にスタンプを貼り付ける</h1>
-            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} size={30} />お絵かき</h1>
-            <hr/>
-            <h1 style={buttonStyle}>共通機能</h1>
-            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} size={30} />スタンプを追加</h1>
+            <div className='flex-text flex-column'>
+              <Button text='閉じる' onClick={this.handleCloseOtherModal} block />
+              <hr style={{ width: '100%' }}/>
+              <h1 style={{fontSize: '1.85em'}}>投稿</h1>
+              <div onClick={() => {}} className='flex'>
+                <IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} size={30} />
+                <h1 style={buttonStyle}>画像にスタンプを貼り付ける</h1>
+              </div>
+              <div onClick={() => {}} className='flex'>
+                <IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} size={30} />
+                <h1 style={buttonStyle}>お絵かき</h1>
+              </div>
+              <hr style={{ width: '100%' }}/>
+              <h1 style={buttonStyle}>共通機能</h1>
+              <div onClick={() => {}} className='flex'>
+                <IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} size={30} />
+                <h1 style={buttonStyle}>スタンプを追加</h1>
+              </div>
+              <div onClick={this.handleOpenModal} className='flex'>
+                <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} size={30} />
+                <h1 style={buttonStyle}>位置情報を追加</h1>
+              </div>
+            </div>
           </ReactModal>
         </div>
         <h1>{this.state.address}</h1>

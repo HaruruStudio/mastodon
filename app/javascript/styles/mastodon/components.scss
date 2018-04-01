@@ -8,8 +8,14 @@
 }
 
 .flex-column {
-  display: flex;
   flex-direction: column;
+}
+
+.flex-text {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+ justify-content: center;
 }
 
 .button {
