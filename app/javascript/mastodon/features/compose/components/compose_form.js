@@ -320,6 +320,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             style={{
               overlay: {
                 zIndex: 100,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
               },
               content: {
                 backgroundColor: '#282C37',
@@ -346,10 +347,10 @@ export default class ComposeForm extends ImmutablePureComponent {
             style={{
               overlay: {
                 zIndex: 100,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
               },
               content: {
                 backgroundColor: '#282C37',
-                display: 'table-cell',
               }
             }}
           >
