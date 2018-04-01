@@ -258,6 +258,8 @@ export default class ComposeForm extends ImmutablePureComponent {
       publishText = this.props.privacy !== 'unlisted' ? intl.formatMessage(messages.publishLoud, { publish: intl.formatMessage(messages.publish) }) : intl.formatMessage(messages.publish);
     }
 
+    const buttonStyle={cursor: 'pointer',marginTop: '10px', fontSize: '1.3em'};
+
     return (
       <div className='compose-form'>
         <WarningContainer />
@@ -325,9 +327,9 @@ export default class ComposeForm extends ImmutablePureComponent {
               }
             }}
           >
-            <button onClick={this.handleCloseModal}>Close</button>
+            <Button text='閉じる' onClick={this.handleCloseModal} block />
             <h1>{this.state.address}</h1>
-            <button onClick={this.handleLocationClear}>クリア</button>
+            <Button text='クリア' onClick={this.handleLocationClear} style={{marginTop: '15px'}} />
             <div>
               <LocationPicker
                 containerElement={ <div style={ {height: '100%'} } /> }
@@ -351,14 +353,14 @@ export default class ComposeForm extends ImmutablePureComponent {
               }
             }}
           >
-            <button onClick={this.handleCloseOtherModal}>Close</button>
+            <Button text='閉じる' onClick={this.handleCloseOtherModal} block />
             <hr/>
-            <h1 style={{fontSize: 30}}>投稿</h1>
-            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} onClick={() => {}} size={50} />画像にスタンプを貼り付ける</h1>
-            <h1 style={{fontSize: 25}}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} onClick={() => {}} size={50} />お絵かき</h1>
+            <h1 style={{fontSize: '1.85em'}}>投稿</h1>
+            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} size={30} />画像にスタンプを貼り付ける</h1>
+            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} size={30} />お絵かき</h1>
             <hr/>
-            <h1 style={{fontSize: 30}}>共通機能</h1>
-            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} onClick={() => {}} size={50} />スタンプを追加</h1>
+            <h1 style={buttonStyle}>共通機能</h1>
+            <h1 onClick={() => {}} style={buttonStyle}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} size={30} />スタンプを追加</h1>
           </ReactModal>
         </div>
         <h1>{this.state.address}</h1>
