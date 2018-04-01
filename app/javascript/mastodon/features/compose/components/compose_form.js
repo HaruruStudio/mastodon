@@ -309,7 +309,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             <SensitiveButtonContainer />
             <SpoilerButtonContainer />
             <IconButton icon='briefcase' title='その他機能' inverted disabled={false} onClick={this.handleOpenOtherModal} size={20} />
-          </div>
+            </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
         <div>
@@ -353,9 +353,12 @@ export default class ComposeForm extends ImmutablePureComponent {
           >
             <button onClick={this.handleCloseOtherModal}>Close</button>
             <hr/>
-            <h1 style={{fontSize: 30}}>その他機能</h1>
-            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} onClick={() => {}} size={60} />スタンプを追加</h1>
-            <h1 style={{fontSize: 25}}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} onClick={() => {}} size={60} />お絵かき</h1>
+            <h1 style={{fontSize: 30}}>投稿</h1>
+            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} onClick={() => {}} size={50} />画像にスタンプを貼り付ける</h1>
+            <h1 style={{fontSize: 25}}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} onClick={() => {}} size={50} />お絵かき</h1>
+            <hr/>
+            <h1 style={{fontSize: 30}}>共通機能</h1>
+            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} onClick={() => {}} size={50} />スタンプを追加</h1>
           </ReactModal>
         </div>
         <h1>{this.state.address}</h1>
