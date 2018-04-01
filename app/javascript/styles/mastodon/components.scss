@@ -3,6 +3,15 @@
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .button {
   background-color: darken($ui-highlight-color, 3%);
   border: 10px none;

@@ -60,6 +60,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     address: '',
     position: '',
     showModal: false,
+    showOtherModal: false,
   };
 
   static propTypes = {
@@ -207,6 +208,14 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.setState({ showModal: false });
   }
 
+  handleOpenOtherModal = () =>  {
+    this.setState({ showOtherModal: true });
+  }
+  
+  handleCloseOtherModal = () => {
+    this.setState({ showOtherModal: false });
+  }
+
   render () {
     const { intl, onPaste, onPickGeo,showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
@@ -222,9 +231,8 @@ export default class ComposeForm extends ImmutablePureComponent {
           background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
         },
         swatch: {
-          padding: '5px',
+          padding: '6px',
           background: '#fff',
-          borderRadius: '1px',
           boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
           display: 'inline-block',
           cursor: 'pointer',
@@ -289,9 +297,7 @@ export default class ComposeForm extends ImmutablePureComponent {
         <div className='compose-form__buttons-wrapper' style={{backgroundColor: rgbToHex(this.state.color.r, this.state.color.g, this.state.color.b)}}>
           <div className='compose-form__buttons'>
             <div>
-              <div style={ styles.swatch } onClick={ this.handleClick }>
-                <div style={ styles.color } />
-              </div>
+              <IconButton icon='eyedropper' title='色を追加' inverted disabled={false} onClick={this.handleClick} size={20} />
               { this.state.displayColorPicker ? <div style={ styles.popover }>
                 <div style={ styles.cover } onClick={ this.handleClose }/>
                 <SketchPicker color={this.state.color} onChange={this.handleChangeColor} />
@@ -302,35 +308,56 @@ export default class ComposeForm extends ImmutablePureComponent {
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
             <SpoilerButtonContainer />
+            <IconButton icon='briefcase' title='その他機能' inverted disabled={false} onClick={this.handleOpenOtherModal} size={20} />
           </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
         <div>
-        <ReactModal 
-          isOpen={this.state.showModal}
-          contentLabel="Location Pick Modal"
-          style={{
-            overlay: {
-              zIndex: 100,
-            },
-            content: {
-              backgroundColor: '#282C37',
-            }
-          }}
-        >
-          <button onClick={this.handleCloseModal}>Close</button>
-          <h1>{this.state.address}</h1>
-          <button onClick={this.handleLocationClear}>クリア</button>
-          <div>
-            <LocationPicker
-              containerElement={ <div style={ {height: '100%'} } /> }
-              mapElement={ <div style={ {height: '500px'} } /> }
-              defaultPosition={defaultPosition}
-              onChange={this.handleLocationChange}
-            />
-          </div>
-        </ReactModal>
-      </div>
+          <ReactModal 
+            isOpen={this.state.showModal}
+            contentLabel="Location Pick Modal"
+            style={{
+              overlay: {
+                zIndex: 100,
+              },
+              content: {
+                backgroundColor: '#282C37',
+              }
+            }}
+          >
+            <button onClick={this.handleCloseModal}>Close</button>
+            <h1>{this.state.address}</h1>
+            <button onClick={this.handleLocationClear}>クリア</button>
+            <div>
+              <LocationPicker
+                containerElement={ <div style={ {height: '100%'} } /> }
+                mapElement={ <div style={ {height: '500px'} } /> }
+                defaultPosition={defaultPosition}
+                onChange={this.handleLocationChange}
+              />
+            </div>
+          </ReactModal>
+        </div>
+        <div>
+          <ReactModal 
+            isOpen={this.state.showOtherModal}
+            contentLabel="Other Modal"
+            style={{
+              overlay: {
+                zIndex: 100,
+              },
+              content: {
+                backgroundColor: '#282C37',
+              }
+            }}
+          >
+            <button onClick={this.handleCloseOtherModal}>Close</button>
+            <hr/>
+            <h1 style={{fontSize: 30}}>その他機能</h1>
+            <h1 style={{fontSize: 25}}><IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} onClick={() => {}} size={60} />スタンプを追加</h1>
+            <h1 style={{fontSize: 25}}><IconButton icon='paint-brush' title='お絵かき' inverted disabled={false} onClick={() => {}} size={60} />お絵かき</h1>
+          </ReactModal>
+        </div>
         <h1>{this.state.address}</h1>
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
