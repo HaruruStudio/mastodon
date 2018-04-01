@@ -366,7 +366,7 @@ export default class ComposeForm extends ImmutablePureComponent {
                 <h1 style={buttonStyle}>お絵かき</h1>
               </div>
               <hr style={{ width: '100%' }}/>
-              <h1 style={buttonStyle}>共通機能</h1>
+              <h1 style={{fontSize: '1.85em'}}>共通機能</h1>
               <div onClick={() => {}} className='flex'>
                 <IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} size={30} />
                 <h1 style={buttonStyle}>スタンプを追加</h1>
