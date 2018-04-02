@@ -160,6 +160,7 @@
   "navigation_bar.pins": "Pinned toots",
   "navigation_bar.preferences": "Preferences",
   "navigation_bar.public_timeline": "Federated timeline",
+  "navigation_bar.announcements": "Announcements from Admin",
   "notification.favourite": "{name} favourited your status",
   "notification.follow": "{name} followed you",
   "notification.mention": "{name} mentioned you",

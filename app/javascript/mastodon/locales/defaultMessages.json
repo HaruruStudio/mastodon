@@ -943,6 +943,10 @@
         "id": "navigation_bar.keyboard_shortcuts"
       },
       {
+        "defaultMessage": "Announcements from Admin",
+        "id": "navigation_bar.announcements"
+      },
+      {
         "defaultMessage": "FAQ",
         "id": "getting_started.faq"
       },
