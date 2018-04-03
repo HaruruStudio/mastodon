@@ -12,6 +12,8 @@
     = f.button :button, t('auth.register'), type: :submit, class: 'button button-primary'
 
 %p または
-= link_to button_tag("Gogoleアカウントで登録", class: "button")  , user_google_oauth2_omniauth_authorize_path
+= link_to button_tag("Gogoleアカウントで登録", class: "button button-primary")  , user_google_oauth2_omniauth_authorize_path
+%br/
+= link_to button_tag("Twitterアカウントで登録", class: "button button-primary")  , '/auth/auth/twitter'
 
 %p.hint.subtle-hint=t('auth.agreement_html', rules_path: about_more_path, terms_path: terms_path)
