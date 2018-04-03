@@ -11,6 +11,8 @@ import { FormattedDate, FormattedNumber } from 'react-intl';
 import CardContainer from '../containers/card_container';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import Video from '../../video';
+import { staticmap } from '../../../initial_state';
+import GoogleMapReact from 'google-map-react'
 
 export default class DetailedStatus extends ImmutablePureComponent {
 
@@ -107,6 +109,30 @@ export default class DetailedStatus extends ImmutablePureComponent {
     if (status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== undefined && status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/) !== null) {
       color =  `#${status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').match(/\[.+?\]/)[0].replace('[', '').replace(']', '')}`; 
     }
+
+    let map;
+    let lat = status.get('lat');
+    let lon = status.get('lon');
+    let address = status.get('address');
+    if (lat && lon) {
+      if(staticmap) {
+        map = (
+        <a href={`https://maps.google.co.jp/maps?q=${lat},${lon}&target=_blank`}><img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=13&size=200x100&sensor=false&key=AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M`} /></a>
+        );
+      } else {
+        map = (
+          <div style={{ height: '300px', width: '100%' }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: 'AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M' }}
+              defaultCenter={{lat: parseFloat(lat),lng: parseFloat(lon)}}
+              defaultZoom={13}
+              options={{gestureHandling: 'cooperative'}}
+            />
+          </div>
+        )
+      }
+    }
+    
     return (
       <div className='detailed-status' style={{  backgroundColor: color }}>
         <a href={status.getIn(['account', 'url'])} onClick={this.handleAccountClick} className='detailed-status__display-name'>
@@ -115,7 +141,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
         </a>
 
         <StatusContent status={status} expanded={!status.get('hidden')} onExpandedToggle={this.handleExpandedToggle} />
-
+        {map}
         {media}
 
         <div className='detailed-status__meta'>
