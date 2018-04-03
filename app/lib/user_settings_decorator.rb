@@ -17,6 +17,7 @@ class UserSettingsDecorator
   def process_update
     user.settings['notification_emails']     = merged_notification_emails if change?('notification_emails')
     user.settings['interactions']            = merged_interactions if change?('interactions')
+    user.settings['staticmap']               = staticmap_preference if change?('setting_staticmap')
     user.settings['default_privacy']         = default_privacy_preference if change?('setting_default_privacy')
     user.settings['default_sensitive']       = default_sensitive_preference if change?('setting_default_sensitive')
     user.settings['unfollow_modal']          = unfollow_modal_preference if change?('setting_unfollow_modal')
@@ -60,6 +61,10 @@ class UserSettingsDecorator
 
   def system_font_ui_preference
     boolean_cast_setting 'setting_system_font_ui'
+  end
+
+  def staticmap_preference
+    boolean_cast_setting 'setting_staticmap'
   end
 
   def auto_play_gif_preference

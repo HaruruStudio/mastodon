@@ -4,6 +4,7 @@ const initialState = element && JSON.parse(element.textContent);
 const getMeta = (prop) => initialState && initialState.meta && initialState.meta[prop];
 
 export const reduceMotion = getMeta('reduce_motion');
+export const staticmap = getMeta('staticmap');
 export const autoPlayGif = getMeta('auto_play_gif');
 export const displaySensitiveMedia = getMeta('display_sensitive_media');
 export const unfollowModal = getMeta('unfollow_modal');

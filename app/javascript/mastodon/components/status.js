@@ -13,6 +13,8 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import { MediaGallery, Video } from '../features/ui/util/async-components';
 import { HotKeys } from 'react-hotkeys';
 import classNames from 'classnames';
+import { staticmap } from '../initial_state';
+import GoogleMapReact from 'google-map-react'
 
 // We use the component (and not the container) since we do not want
 // to use the progress bar to show download progress
@@ -229,6 +231,29 @@ export default class Status extends ImmutablePureComponent {
     }
     let colorStyle = {};
     colorStyle.backgroundColor = color;
+    let map;
+    let lat = status.get('lat');
+    let lon = status.get('lon');
+    let address = status.get('address');
+    if (lat && lon) {
+      if(staticmap) {
+        map = (
+        <a href={`https://maps.google.co.jp/maps?q=${lat},${lon}&target=_blank`}><img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=13&size=200x100&sensor=false&key=AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M`} /></a>
+        );
+      } else {
+        map = (
+          <div style={{ height: '100px', width: '100%' }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: 'AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M' }}
+              defaultCenter={{lat: parseFloat(lat),lng: parseFloat(lon)}}
+              defaultZoom={13}
+            />
+          </div>
+        )
+      }
+    }
+  
+
     return (
       <HotKeys handlers={handlers}>
         <div className={classNames('status__wrapper', `status__wrapper-${status.get('visibility')}`, { focusable: !this.props.muted })} tabIndex={this.props.muted ? null : 0}>
@@ -248,7 +273,7 @@ export default class Status extends ImmutablePureComponent {
             </div>
 
             <StatusContent status={status} onClick={this.handleClick} expanded={!status.get('hidden')} onExpandedToggle={this.handleExpandedToggle} />
-
+            {map}
             {media}
 
             <StatusActionBar status={status} account={account} {...other} />
