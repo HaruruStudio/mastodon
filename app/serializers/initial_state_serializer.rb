@@ -22,6 +22,7 @@ class InitialStateSerializer < ActiveModel::Serializer
 
     if object.current_account
       store[:me]                      = object.current_account.id.to_s
+      store[:staticmap]               = object.current_account.user.setting_staticmap
       store[:unfollow_modal]          = object.current_account.user.setting_unfollow_modal
       store[:boost_modal]             = object.current_account.user.setting_boost_modal
       store[:delete_modal]            = object.current_account.user.setting_delete_modal
