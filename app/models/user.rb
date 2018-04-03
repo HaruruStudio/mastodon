@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   devise :pam_authenticatable if ENV['PAM_ENABLED'] == 'true'
 
-  devise :omniauthable, { omniauth_providers: [:google_oauth2] }
+  devise :omniauthable, { omniauth_providers: [:google_oauth2, :twitter] }
 
   belongs_to :account, inverse_of: :user
   belongs_to :invite, counter_cache: :uses, optional: true
@@ -338,11 +338,11 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    uid = 'aaa'
+    uid = auth['uid']
     provider = auth['provider']
     email = auth['info']['email'] || ''
     avator_url = auth['info']['image'] || ''
-    username = 'aaa'
+    username = auth['uid']
     display_name = auth['info']['name'] || auth['info']['nickname'] || username
 
     user = find_or_create_by(provider: provider, uid: uid) do |user|
