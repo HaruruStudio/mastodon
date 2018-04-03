@@ -247,6 +247,7 @@ export default class Status extends ImmutablePureComponent {
               bootstrapURLKeys={{ key: 'AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M' }}
               defaultCenter={{lat: parseFloat(lat),lng: parseFloat(lon)}}
               defaultZoom={13}
+              options={{gestureHandling: 'cooperative'}}
             />
           </div>
         )
