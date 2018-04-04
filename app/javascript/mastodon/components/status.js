@@ -232,6 +232,7 @@ export default class Status extends ImmutablePureComponent {
     let colorStyle = {};
     colorStyle.backgroundColor = color;
     let map;
+    let statusAddress;
     let lat = status.get('lat');
     let lon = status.get('lon');
     let address = status.get('address');
@@ -252,6 +253,12 @@ export default class Status extends ImmutablePureComponent {
           </div>
         )
       }
+    }
+
+    if (address) {
+      statusAddress = (
+        <p style={{fontSize: '12px'}}>{address}</p>
+      )
     }
   
 
@@ -275,6 +282,7 @@ export default class Status extends ImmutablePureComponent {
 
             <StatusContent status={status} onClick={this.handleClick} expanded={!status.get('hidden')} onExpandedToggle={this.handleExpandedToggle} />
             {map}
+            {statusAddress}
             {media}
 
             <StatusActionBar status={status} account={account} {...other} />

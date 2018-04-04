@@ -111,6 +111,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
     }
 
     let map;
+    let statusAddress;
     let lat = status.get('lat');
     let lon = status.get('lon');
     let address = status.get('address');
@@ -132,6 +133,12 @@ export default class DetailedStatus extends ImmutablePureComponent {
         )
       }
     }
+
+    if (address) {
+      statusAddress = (
+        <p style={{fontSize: '12px'}}>{address}</p>
+      )
+    }
     
     return (
       <div className='detailed-status' style={{  backgroundColor: color }}>
@@ -142,6 +149,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
 
         <StatusContent status={status} expanded={!status.get('hidden')} onExpandedToggle={this.handleExpandedToggle} />
         {map}
+        {statusAddress}
         {media}
 
         <div className='detailed-status__meta'>
