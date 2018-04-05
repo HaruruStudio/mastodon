@@ -239,13 +239,13 @@ export default class Status extends ImmutablePureComponent {
     if (lat && lon) {
       if(staticmap) {
         map = (
-        <a href={`https://maps.google.co.jp/maps?q=${lat},${lon}&target=_blank`}><img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=13&size=200x100&sensor=false&key=AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M`} /></a>
+        <a href={`https://maps.google.co.jp/maps?q=${lat},${lon}&target=_blank`}><img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=13&size=200x100&sensor=false&key=AIzaSyBwCAY9q8Q5t2uJYsGpVHeqDK0fwzgXAz8`} /></a>
         );
       } else {
         map = (
           <div style={{ height: '100px', width: '100%' }}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: 'AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M' }}
+              bootstrapURLKeys={{ key: 'AIzaSyBwCAY9q8Q5t2uJYsGpVHeqDK0fwzgXAz8' }}
               defaultCenter={{lat: parseFloat(lat),lng: parseFloat(lon)}}
               defaultZoom={13}
               options={{gestureHandling: 'cooperative'}}
