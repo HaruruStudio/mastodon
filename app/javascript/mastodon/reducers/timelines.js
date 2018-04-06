@@ -61,12 +61,17 @@ const updateTimeline = (state, timeline, status) => {
   const ids        = state.getIn([timeline, 'items'], ImmutableList());
   const includesId = ids.includes(status.get('id'));
   const unread     = state.getIn([timeline, 'unread'], 0);
-
+  
   if (includesId) {
     return state;
   }
 
   let newIds = ids;
+
+  const ssu = new SpeechSynthesisUtterance();
+  ssu.text = status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/, 'URLしょうりゃく');
+  // speechSynthesis.speak(ssu);
+  console.log(ssu);
 
   return state.update(timeline, initialTimeline, map => map.withMutations(mMap => {
     if (!top) mMap.set('unread', unread + 1);
