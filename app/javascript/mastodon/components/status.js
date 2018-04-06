@@ -14,7 +14,8 @@ import { MediaGallery, Video } from '../features/ui/util/async-components';
 import { HotKeys } from 'react-hotkeys';
 import classNames from 'classnames';
 import { staticmap } from '../initial_state';
-import GoogleMapReact from 'google-map-react'
+import GoogleMapReact from 'google-map-react';
+import CardContainer from '../features/status/containers/card_container';
 
 // We use the component (and not the container) since we do not want
 // to use the progress bar to show download progress
@@ -283,6 +284,7 @@ export default class Status extends ImmutablePureComponent {
             <StatusContent status={status} onClick={this.handleClick} expanded={!status.get('hidden')} onExpandedToggle={this.handleExpandedToggle} />
             {map}
             {statusAddress}
+            <CardContainer onOpenMedia={this.props.onOpenMedia} statusId={status.get('id')}/>
             {media}
 
             <StatusActionBar status={status} account={account} {...other} />
