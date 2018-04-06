@@ -68,11 +68,6 @@ const updateTimeline = (state, timeline, status) => {
 
   let newIds = ids;
 
-  const ssu = new SpeechSynthesisUtterance();
-  ssu.text = status.get('contentHtml').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/, 'URLしょうりゃく');
-  // speechSynthesis.speak(ssu);
-  console.log(ssu);
-
   return state.update(timeline, initialTimeline, map => map.withMutations(mMap => {
     if (!top) mMap.set('unread', unread + 1);
     if (top && ids.size > 40) newIds = newIds.take(20);
