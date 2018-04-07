@@ -3,6 +3,7 @@
   %link{ href: asset_pack_path('features/compose.js'), crossorigin: 'anonymous', rel: 'preload', as: 'script' }/
   %link{ href: asset_pack_path('features/home_timeline.js'), crossorigin: 'anonymous', rel: 'preload', as: 'script' }/
   %link{ href: asset_pack_path('features/notifications.js'), crossorigin: 'anonymous', rel: 'preload', as: 'script' }/
+  %link{ href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel: 'stylesheet' }
   %meta{name: 'applicationServerKey', content: Rails.configuration.x.vapid_public_key}
   %script#initial-state{ type: 'application/json' }!= json_escape(@initial_state_json)
   %script{ type: 'text/javascript', src: 'https://maps.googleapis.com/maps/api/js?&v=3.exp&key=AIzaSyBwCAY9q8Q5t2uJYsGpVHeqDK0fwzgXAz8&libraries=geometry,drawing,places'}

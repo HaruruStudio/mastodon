@@ -84,6 +84,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     onPaste: PropTypes.func.isRequired,
     onPickGeo: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
+    onTootRate: PropTypes.func.isRequired,
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
   };
@@ -216,8 +217,13 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.setState({ showOtherModal: false });
   }
 
+  handleTootRate = () => {
+    this.setState({ showOtherModal: false });
+    this.props.onTootRate();
+  }
+
   render () {
-    const { intl, onPaste, onPickGeo,showSearch, anyMedia } = this.props;
+    const { intl, onPaste, showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
     const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
@@ -310,7 +316,7 @@ export default class ComposeForm extends ImmutablePureComponent {
             <SensitiveButtonContainer />
             <SpoilerButtonContainer />
             <IconButton icon='briefcase' title='その他機能' inverted disabled={false} onClick={this.handleOpenOtherModal} size={20} />
-            </div>
+          </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
         <div>
@@ -358,7 +364,7 @@ export default class ComposeForm extends ImmutablePureComponent {
               <Button text='閉じる' onClick={this.handleCloseOtherModal} block />
               <hr style={{ width: '100%' }}/>
               <h1 style={{fontSize: '1.85em'}}>投稿</h1>
-              <div onClick={this.handleOpenModal} className='flex'>
+              <div style={{ marginTop: 10 }} onClick={this.handleOpenModal} className='flex'>
                 <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} size={30} />
                 <h1 style={buttonStyle}>位置情報を追加</h1>
               </div>
@@ -372,9 +378,18 @@ export default class ComposeForm extends ImmutablePureComponent {
               </div>
               <hr style={{ width: '100%' }}/>
               <h1 style={{fontSize: '1.85em'}}>共通機能</h1>
-              <div onClick={() => {}} className='flex'>
+              <div style={{ marginTop: 10 }} onClick={() => {}} className='flex'>
                 <IconButton icon='smile-o' title='スタンプを追加' inverted disabled={false} size={30} />
                 <h1 style={buttonStyle}>スタンプを追加(準備中)</h1>
+              </div>
+              <hr style={{ width: '100%' }}/>
+              <h1 style={{ fontSize: '1.85em' }}>Mastodon Rater</h1>
+              <div style={{ marginTop: 10 }} onClick={this.handleTootRate}>
+                <div className='flex'>
+                  <i className='material-icons'>chat</i>
+                  <h1 style={buttonStyle}>Toot率投稿</h1>
+                </div>
+                <h3>サーバー全体とのトゥート数比</h3>
               </div>
             </div>
           </ReactModal>

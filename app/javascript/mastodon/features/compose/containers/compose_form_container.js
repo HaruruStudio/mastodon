@@ -11,6 +11,7 @@ import {
   changeComposeGeo,
   insertEmojiCompose,
 } from '../../../actions/compose';
+import { tootRate } from '../../../actions/rater';
 
 const mapStateToProps = state => ({
   text: state.getIn(['compose', 'text']),
@@ -63,6 +64,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   onPickEmoji (position, data) {
     dispatch(insertEmojiCompose(position, data));
+  },
+
+  onTootRate () {
+    dispatch(tootRate());
   },
 
 });
