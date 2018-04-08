@@ -1,4 +1,4 @@
-class Util {
+export default class Util {
 	static getRelatedLinks (exec) {
 		if (exec) {
 			let links = exec.getResponseHeader("link").split(", ");

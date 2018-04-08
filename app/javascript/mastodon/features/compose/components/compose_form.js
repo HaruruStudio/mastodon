@@ -85,6 +85,8 @@ export default class ComposeForm extends ImmutablePureComponent {
     onPickGeo: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
     onTootRate: PropTypes.func.isRequired,
+    onTPD: PropTypes.func.isRequired,
+    onRelevance: PropTypes.func.isRequired,
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
   };
@@ -220,6 +222,16 @@ export default class ComposeForm extends ImmutablePureComponent {
   handleTootRate = () => {
     this.setState({ showOtherModal: false });
     this.props.onTootRate();
+  }
+
+  handleTPD = () => {
+    this.setState({ showOtherModal: false });
+    this.props.onTPD();
+  }
+
+  handleRelevance = () => {
+    this.setState({ showOtherModal: false });
+    this.props.onRelevance();
   }
 
   render () {
@@ -387,10 +399,24 @@ export default class ComposeForm extends ImmutablePureComponent {
               <div style={{ marginTop: 10 }} onClick={this.handleTootRate}>
                 <div className='flex'>
                   <i className='material-icons'>chat</i>
-                  <h1 style={buttonStyle}>Toot率投稿</h1>
+                  <h1 style={buttonStyle}>Toot Rater</h1>
                 </div>
                 <h3>サーバー全体とのトゥート数比</h3>
               </div>
+              <div onClick={this.handleTPD}>
+                <div className='flex'>
+                  <i className='material-icons'>subject</i>
+                  <h1 style={buttonStyle}>TPD(Toots Per Day)</h1>
+                </div>
+                <h3>1日当たりの平均トゥート数</h3>
+              </div>
+              {/* <div onClick={this.handleRelevance}>
+                <div className='flex'>
+                  <i className='material-icons'>people</i>
+                  <h1 style={buttonStyle}>Relevance Analyzer</h1>
+                </div>
+                <h3>ユーザーとの親密度</h3>
+              </div> */}
             </div>
           </ReactModal>
         </div>

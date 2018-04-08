@@ -11,7 +11,7 @@ import {
   changeComposeGeo,
   insertEmojiCompose,
 } from '../../../actions/compose';
-import { tootRate } from '../../../actions/rater';
+import { tootRate, tpd, getRelevance } from '../../../actions/rater';
 
 const mapStateToProps = state => ({
   text: state.getIn(['compose', 'text']),
@@ -69,6 +69,14 @@ const mapDispatchToProps = (dispatch) => ({
   onTootRate () {
     dispatch(tootRate());
   },
+
+  onTPD () {
+    dispatch(tpd());
+  },
+
+  onRelevance () {
+    dispatch(getRelevance());
+  }
 
 });
 
