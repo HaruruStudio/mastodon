@@ -117,6 +117,8 @@
     "stringz": "^0.3.0",
     "style-loader": "^0.19.0",
     "substring-trie": "^1.0.2",
+    "sweetalert2": "^7.18.0",
+    "sweetalert2-react-content": "^1.0.0",
     "throng": "^4.0.0",
     "tiny-queue": "^0.2.1",
     "uuid": "^3.1.0",

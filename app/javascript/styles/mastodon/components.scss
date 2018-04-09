@@ -18,6 +18,14 @@
   justify-content: center;
 }
 
+.swal {
+  border: 1px solid white;
+  color: white;
+  p {
+    color: white;
+  }
+}
+
 .button {
   background-color: darken($ui-highlight-color, 3%);
   border: 10px none;

@@ -3,6 +3,13 @@ import api from '../api';
 import { me } from '../initial_state';
 import Util from '../lib/Util';
 
+import React from 'react';
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const ReactSwal = withReactContent(Swal)
+
 export const TOOT_RATE_REQUEST = 'TOOT_RATE_REQUEST';
 export const TOOT_RATE_SUCCESS = 'TOOT_RATE_SUCCESS';
 export const TOOT_RATE_FAIL = 'TOOT_RATE_FAIL';
@@ -48,12 +55,24 @@ export function tootRate() {
 };
 
 export function tootRateRequest() {
+  ReactSwal.fire({
+    title: <p>投稿中です....</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TOOT_RATE_REQUEST,
   };
 };
 
 export function tootRateSuccess(statuses, next) {
+  ReactSwal.fire({
+    title: <p>投稿されました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TOOT_RATE_SUCCESS,
     statuses,
@@ -62,6 +81,12 @@ export function tootRateSuccess(statuses, next) {
 };
 
 export function tootRateFail(error) {
+  ReactSwal.fire({
+    title: <p>投稿に失敗しました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TOOT_RATE_FAIL,
     error,
@@ -91,18 +116,30 @@ export function tpd() {
         });
         dispatch(tpdSuccess(response.data, null));
       }).catch(error => {
-        dispatch(tpdRateFail(error));
+        dispatch(tpdFail(error));
       });
   };
 };
 
 export function tpdRequest() {
+  ReactSwal.fire({
+    title: <p>投稿中です....</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TPD_REQUEST,
   };
 };
 
 export function tpdSuccess(statuses, next) {
+  ReactSwal.fire({
+    title: <p>投稿されました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TPD_SUCCESS,
     statuses,
@@ -111,6 +148,12 @@ export function tpdSuccess(statuses, next) {
 };
 
 export function tpdFail(error) {
+  ReactSwal.fire({
+    title: <p>投稿に失敗しました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: TPD_FAIL,
     error,
@@ -282,12 +325,24 @@ export function getRelevance(dateArea) {
 };
 
 export function RelevanceRequest() {
+  ReactSwal.fire({
+    title: <p>投稿中です....</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: RELEVANCE_REQUEST,
   };
 };
 
 export function RelevanceSuccess(statuses, next) {
+  ReactSwal.fire({
+    title: <p>投稿されました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: RELEVANCE_SUCCESS,
     statuses,
@@ -296,6 +351,12 @@ export function RelevanceSuccess(statuses, next) {
 };
 
 export function RelevanceFail(error) {
+  ReactSwal.fire({
+    title: <p>投稿に失敗しました</p>,
+    background: '#282C37',
+    footer: 'Mastodon Rater',
+    customClass: 'swal'
+  })
   return {
     type: RELEVANCE_FAIL,
     error,
