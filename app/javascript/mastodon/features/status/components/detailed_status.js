@@ -88,11 +88,13 @@ export default class DetailedStatus extends ImmutablePureComponent {
 
     if (status.get('visibility') === 'direct') {
       reblogIcon = 'envelope';
+    } else if (status.get('visibility') === 'limited') {
+      reblogIcon = 'low-vision';
     } else if (status.get('visibility') === 'private') {
       reblogIcon = 'lock';
     }
 
-    if (status.get('visibility') === 'private') {
+    if (['private', 'limited'].includes(status.get('visibility'))) {
       reblogLink = <i className={`fa fa-${reblogIcon}`} />;
     } else {
       reblogLink = (<Link to={`/statuses/${status.get('id')}/reblogs`} className='detailed-status__link'>

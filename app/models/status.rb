@@ -39,7 +39,7 @@ class Status < ApplicationRecord
 
   update_index('statuses#status', :proper) if Chewy.enabled?
 
-  enum visibility: [:public, :unlisted, :private, :direct], _suffix: :visibility
+  enum visibility: [:public, :unlisted, :private, :limited, :direct], _suffix: :visibility
 
   belongs_to :application, class_name: 'Doorkeeper::Application', optional: true
 
@@ -154,7 +154,7 @@ class Status < ApplicationRecord
   end
 
   def hidden?
-    private_visibility? || direct_visibility?
+    private_visibility? || limited_visibility? || direct_visibility?
   end
 
   def with_media?
@@ -197,7 +197,7 @@ class Status < ApplicationRecord
     end
 
     def as_home_timeline(account)
-      where(account: [account] + account.following).where(visibility: [:public, :unlisted, :private])
+      where(account: [account] + account.following).where(visibility: [:public, :unlisted, :private, :limited])
     end
 
     def as_direct_timeline(account, limit = 20, max_id = nil, since_id = nil, cache_ids = false)
@@ -306,6 +306,8 @@ class Status < ApplicationRecord
         # followers can see followers-only stuff, but also things they are mentioned in.
         # non-followers can see everything that isn't private/direct, but can see stuff they are mentioned in.
         visibility.push(:private) if account.following?(target_account)
+        # followed users can see limited toots.
+        visibility.push(:limited) if account.followed_by?(target_account)
 
         scope = left_outer_joins(:reblog)
 
@@ -402,7 +404,7 @@ class Status < ApplicationRecord
   end
 
   def increment_counter_caches
-    return if direct_visibility?
+    return if limited_visibility? || direct_visibility?
 
     if association(:account).loaded?
       account.update_attribute(:statuses_count, account.statuses_count + 1)
@@ -420,7 +422,7 @@ class Status < ApplicationRecord
   end
 
   def decrement_counter_caches
-    return if direct_visibility? || marked_for_mass_destruction?
+    return if limited_visibility? || direct_visibility? || marked_for_mass_destruction?
 
     if association(:account).loaded?
       account.update_attribute(:statuses_count, [account.statuses_count - 1, 0].max)

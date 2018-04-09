@@ -13,6 +13,8 @@ class FanOutOnWriteService < BaseService
     if status.direct_visibility?
       deliver_to_mentioned_followers(status)
       deliver_to_direct_timelines(status)
+    elsif status.limited_visibility?
+      deliver_to_followed_users(status)
     else
       deliver_to_followers(status)
       deliver_to_lists(status)
@@ -41,6 +43,16 @@ class FanOutOnWriteService < BaseService
     status.account.followers_for_local_distribution.select(:id).reorder(nil).find_in_batches do |followers|
       FeedInsertWorker.push_bulk(followers) do |follower|
         [status.id, follower.id, :home]
+      end
+    end
+  end
+
+  def deliver_to_followed_users(status)
+    Rails.logger.debug "Delivering status #{status.id} to followed users"
+
+    status.account.followers_for_local_distribution.select(:id).reorder(nil).find_in_batches do |followers|
+      FeedInsertWorker.push_bulk(followers) do |follower|
+        [status.id, follower.id, :home] if status.account.following?(follower)
       end
     end
   end

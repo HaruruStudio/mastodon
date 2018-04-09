@@ -14,6 +14,8 @@ class StatusPolicy < ApplicationPolicy
   def show?
     if direct?
       owned? || mention_exists?
+    elsif limited?
+      owned? || current_account&.followed_by?(author) || mention_exists?
     elsif private?
       owned? || following_author? || mention_exists?
     else
@@ -22,7 +24,7 @@ class StatusPolicy < ApplicationPolicy
   end
 
   def reblog?
-    !direct? && (!private? || owned?) && show? && !blocking_author?
+    !direct? && !limited? && (!private? || owned?) && show? && !blocking_author?
   end
 
   def favourite?
@@ -51,6 +53,10 @@ class StatusPolicy < ApplicationPolicy
 
   def private?
     record.private_visibility?
+  end
+
+  def limited?
+    record.limited_visibility?
   end
 
   def mention_exists?
