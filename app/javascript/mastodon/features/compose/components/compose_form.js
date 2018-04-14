@@ -242,6 +242,11 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.props.onChangeFont('juliamo');
   }
 
+  handleUseDancingMen = () => {
+    this.setState({ font: 'dancingmen', showFontModal: false });
+    this.props.onChangeFont('dancingmen');
+  }
+
   handleUseDefault = () => {
     this.setState({ font: 'mastodon-font-sans-serif', showFontModal: false });
     this.props.onChangeFont('mastodon-font-sans-serif');
@@ -401,10 +406,13 @@ export default class ComposeForm extends ImmutablePureComponent {
           >
             <Button text='閉じる' onClick={this.handleCloseFontModal} block />
             <div onClick={() => {}} className='flex'>
-              <h1 onClick={this.handleUseDefault} style={buttonStyle}>デフォルト<div style={{ fontFamily:'mastodon-font-sans-serif' }}>(こんにちは!)</div></h1>
+              <h1 onClick={this.handleUseDefault} style={buttonStyle}>デフォルト<div style={{ fontFamily:'mastodon-font-sans-serif' }}>こんにちは!</div></h1>
             </div>
             <div onClick={() => {}} className='flex'>
-              <h1 onClick={this.handleUseJuliamo} style={buttonStyle}>ユリアーモ<div style={{ fontFamily:'juliamo' }}>(Bonan tagon!)</div></h1>
+              <h1 onClick={this.handleUseJuliamo} style={buttonStyle}>ユリアーモ<div style={{ fontFamily:'juliamo' }}>Bonan tagon!</div></h1>
+            </div>
+            <div onClick={() => {}} className='flex'>
+              <h1 onClick={this.handleUseDancingMen} style={buttonStyle}>踊る人形<div style={{ fontFamily:'dancingmen' }}>Hello!</div></h1>
             </div>
           </ReactModal>
         </div>
