@@ -50,6 +50,7 @@ const defaultPosition = {
 @injectIntl
 export default class ComposeForm extends ImmutablePureComponent {
   state = {
+    font: 'mastodon-font-sans-serif',
     displayColorPicker: false,
     color: {
       r: '40',
@@ -60,6 +61,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     address: '',
     position: '',
     showModal: false,
+    showFontModal: false,
     showOtherModal: false,
   };
 
@@ -83,6 +85,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     onChangeSpoilerText: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
     onPickGeo: PropTypes.func.isRequired,
+    onChangeFont: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
     onTootRate: PropTypes.func.isRequired,
     onTPD: PropTypes.func.isRequired,
@@ -234,6 +237,25 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.props.onRelevance();
   }
 
+  handleUseJuliamo = () => {
+    this.setState({ font: 'juliamo', showFontModal: false });
+    this.props.onChangeFont('juliamo');
+  }
+
+  handleUseDefault = () => {
+    this.setState({ font: 'mastodon-font-sans-serif', showFontModal: false });
+    this.props.onChangeFont('mastodon-font-sans-serif');
+  }
+
+  handleSelectFont = () => {
+    this.setState({ showFontModal: true, showOtherModal: false });
+  }
+
+  handleCloseFontModal = () => {
+    this.setState({ showFontModal: false });
+  }
+
+
   render () {
     const { intl, onPaste, showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
@@ -281,7 +303,12 @@ export default class ComposeForm extends ImmutablePureComponent {
     return (
       <div className='compose-form'>
         <WarningContainer />
-
+        {this.state.font === 'mastodon-font-sans-serif' ? null : 
+        <div>  
+          <h1>{this.state.font}</h1>
+          <p style={{ fontFamily: this.state.font }}>{this.props.text}</p>
+        </div>
+        }
         <Collapsable isVisible={this.props.spoiler} fullHeight={50}>
           <div className='spoiler-input'>
             <label>
@@ -360,6 +387,29 @@ export default class ComposeForm extends ImmutablePureComponent {
         </div>
         <div>
           <ReactModal 
+            isOpen={this.state.showFontModal}
+            contentLabel="Font Modal"
+            style={{
+              overlay: {
+                zIndex: 100,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              },
+              content: {
+                backgroundColor: '#282C37',
+              }
+            }}
+          >
+            <Button text='閉じる' onClick={this.handleCloseFontModal} block />
+            <div onClick={() => {}} className='flex'>
+              <h1 onClick={this.handleUseDefault} style={buttonStyle}>デフォルト<div style={{ fontFamily:'mastodon-font-sans-serif' }}>(こんにちは!)</div></h1>
+            </div>
+            <div onClick={() => {}} className='flex'>
+              <h1 onClick={this.handleUseJuliamo} style={buttonStyle}>ユリアーモ<div style={{ fontFamily:'juliamo' }}>(Bonan tagon!)</div></h1>
+            </div>
+          </ReactModal>
+        </div>
+        <div>
+          <ReactModal 
             isOpen={this.state.showOtherModal}
             contentLabel="Other Modal"
             style={{
@@ -379,6 +429,12 @@ export default class ComposeForm extends ImmutablePureComponent {
               <div style={{ marginTop: 10 }} onClick={this.handleOpenModal} className='flex'>
                 <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} size={30} />
                 <h1 style={buttonStyle}>位置情報を追加</h1>
+              </div>
+              <div onClick={this.handleSelectFont}>
+                <div className='flex'>
+                <IconButton icon='font' title='フォントを設定' inverted disabled={false} size={30} />
+                <h1 style={buttonStyle}>フォントを設定</h1>
+                </div>
               </div>
               <div onClick={() => {}} className='flex'>
                 <IconButton icon='smile-o' title='画像にスタンプを貼り付ける' inverted disabled={false} size={30} />

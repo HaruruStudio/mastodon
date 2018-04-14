@@ -26,6 +26,7 @@
 #  lat                    :decimal(17, 14)
 #  lon                    :decimal(17, 14)
 #  address                :string
+#  font                   :string
 #
 
 class Status < ApplicationRecord

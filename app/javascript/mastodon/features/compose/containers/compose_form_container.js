@@ -10,6 +10,7 @@ import {
   changeComposeSpoilerText,
   changeComposeGeo,
   insertEmojiCompose,
+  changeComposeFont,
 } from '../../../actions/compose';
 import { tootRate, tpd, getRelevance } from '../../../actions/rater';
 
@@ -60,6 +61,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   onPickGeo (lat, lon, address) {
     dispatch(changeComposeGeo(lat, lon, address))
+  },
+
+  onChangeFont (font) {
+    dispatch(changeComposeFont(font))
   },
 
   onPickEmoji (position, data) {

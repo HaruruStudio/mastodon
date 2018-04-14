@@ -35,7 +35,8 @@ class PostStatusService < BaseService
                                         application: options[:application],
                                         lat: options[:lat],
                                         lon: options[:lon],
-                                        address: options[:address])
+                                        address: options[:address],
+                                        font: options[:font])
     end
 
     process_mentions_service.call(status)

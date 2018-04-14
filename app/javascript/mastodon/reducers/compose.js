@@ -25,6 +25,7 @@ import {
   COMPOSE_COMPOSING_CHANGE,
   COMPOSE_EMOJI_INSERT,
   COMPOSE_GEO_CHANGE,
+  COMPOSE_FONT_CHANGE,
   COMPOSE_UPLOAD_CHANGE_REQUEST,
   COMPOSE_UPLOAD_CHANGE_SUCCESS,
   COMPOSE_UPLOAD_CHANGE_FAIL,
@@ -62,6 +63,7 @@ const initialState = ImmutableMap({
   lat: null,
   lon: null,
   address: null,
+  font: 'mastodon-font-sans-serif',
   tagHistory: ImmutableList(),
 });
 
@@ -157,6 +159,12 @@ const setGeo = (state, lat, lon, address) => {
     map.set('lat', lat);
     map.set('lon', lon);
     map.set('address', address);
+  })
+}
+
+const setFont = (state, font) => {
+  return state.withMutations(map => {
+    map.set('font', font);
   })
 }
 
@@ -294,6 +302,8 @@ export default function compose(state = initialState, action) {
     return insertEmoji(state, action.position, action.emoji);
   case COMPOSE_GEO_CHANGE:
     return setGeo(state, action.lat, action.lon, action.address);
+  case COMPOSE_FONT_CHANGE:
+    return setFont(state, action.font);
   case COMPOSE_UPLOAD_CHANGE_SUCCESS:
     return state
       .set('is_submitting', false)

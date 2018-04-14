@@ -49,6 +49,8 @@ export const COMPOSE_EMOJI_INSERT = 'COMPOSE_EMOJI_INSERT';
 
 export const COMPOSE_GEO_CHANGE = 'COMPOSE_GEO_CHANGE';
 
+export const COMPOSE_FONT_CHANGE = 'COMPOSE_FONT_CHANGE';
+
 export const COMPOSE_UPLOAD_CHANGE_REQUEST     = 'COMPOSE_UPLOAD_UPDATE_REQUEST';
 export const COMPOSE_UPLOAD_CHANGE_SUCCESS     = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
 export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
@@ -117,6 +119,7 @@ export function submitCompose() {
       visibility: getState().getIn(['compose', 'privacy']),
       lat: getState().getIn(['compose', 'lat'], null),
       lon: getState().getIn(['compose', 'lon'], null),
+      font: getState().getIn(['compose', 'font'], 'mastodon-font-sans-serif'),
       address: getState().getIn(['compose', 'address'], null),
     }, {
       headers: {
@@ -444,6 +447,13 @@ export function changeComposeGeo(lat, lon, address) {
     lat,
     lon,
     address,
+  };
+};
+
+export function changeComposeFont(font) {
+  return {
+    type: COMPOSE_FONT_CHANGE,
+    font,
   };
 };
 

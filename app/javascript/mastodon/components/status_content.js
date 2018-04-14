@@ -137,6 +137,9 @@ export default class StatusContent extends React.PureComponent {
       directionStyle.direction = 'rtl';
     }
 
+    directionStyle.fontFamily = status.get('font');
+    console.log(status.get('font'));
+
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';
 

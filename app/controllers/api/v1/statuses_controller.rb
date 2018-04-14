@@ -48,6 +48,7 @@ class Api::V1::StatusesController < Api::BaseController
                                          visibility: status_params[:visibility],
                                          lat: status_params[:lat],
                                          lon: status_params[:lon],
+                                         font: status_params[:font],
                                          address: status_params[:address],
                                          application: doorkeeper_token.application,
                                          idempotency: request.headers['Idempotency-Key'])
@@ -74,7 +75,7 @@ class Api::V1::StatusesController < Api::BaseController
   end
 
   def status_params
-    params.permit(:status, :in_reply_to_id, :sensitive, :spoiler_text, :visibility, :lat, :lon, :address, media_ids: [])
+    params.permit(:status, :in_reply_to_id, :sensitive, :spoiler_text, :visibility, :lat, :lon, :font, :address, media_ids: [])
   end
 
   def pagination_params(core_params)
