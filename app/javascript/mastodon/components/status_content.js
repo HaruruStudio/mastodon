@@ -5,6 +5,13 @@ import { isRtl } from '../rtl';
 import { FormattedMessage } from 'react-intl';
 import Permalink from './permalink';
 import classnames from 'classnames';
+import dotenv from 'dotenv';
+
+const env = process.env.NODE_ENV || 'development';
+
+dotenv.config({
+  path: env === 'production' ? '.env.production' : '.env',
+});
 
 export default class StatusContent extends React.PureComponent {
 
@@ -129,7 +136,7 @@ export default class StatusContent extends React.PureComponent {
     let content;
     console.log(lat);
     if (lat && lon) {
-      map = `<a href='https://maps.google.co.jp/maps?q="${lat},${lon} target='_blank'><img src='https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=15&size=200x100&sensor=false&key=AIzaSyAS_RnMcc5glB_ufybY-mj-8fQOHrZEF6M'></a>`;
+      map = `<a href='https://maps.google.co.jp/maps?q="${lat},${lon} target='_blank'><img src='https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2C${lon}&markers=color%3Ared%7Csize%3Amid%7C${lat}%2C${lon}&zoom=15&size=200x100&sensor=false&key=${process.env.GOOGLE_API_KEY}'></a>`;
     }
 
     content = { __html: status.get('contentHtml') === '<p>.</p>'  + map ? '' : status.get('contentHtml').replace(/\[([\da-fA-F]{6}|[\da-fA-F]{3})\]/, '') + map };
