@@ -36,6 +36,8 @@
 #  invite_id                 :bigint(8)
 #  remember_token            :string
 #  chosen_languages          :string           is an Array
+#  provider                  :string
+#  uid                       :string
 #
 
 class User < ApplicationRecord

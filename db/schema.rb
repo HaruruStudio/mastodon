@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.string "featured_collection_url"
     t.jsonb "fields"
     t.string "actor_type"
+    t.binary "avatar_model"
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", unique: true
     t.index ["uri"], name: "index_accounts_on_uri"
@@ -539,6 +540,8 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.bigint "invite_id"
     t.string "remember_token"
     t.string "chosen_languages", array: true
+    t.string "provider"
+    t.string "uid"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -564,6 +567,13 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_web_settings_on_user_id", unique: true
+  end
+
+  create_table "world", force: :cascade do |t|
+    t.integer "dx"
+    t.integer "dy"
+    t.integer "dz"
+    t.json "blocks", array: true
   end
 
   add_foreign_key "account_domain_blocks", "accounts", name: "fk_206c6029bd", on_delete: :cascade

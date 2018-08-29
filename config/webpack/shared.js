@@ -12,6 +12,7 @@ const localePackPaths = require('./generateLocalePacks');
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`;
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const packPaths = sync(join(entryPath, extensionGlob));
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: Object.assign(
@@ -44,6 +45,7 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
     new webpack.NormalModuleReplacementPlugin(
       /^history\//, (resource) => {
