@@ -23,6 +23,8 @@
 #  account_id             :bigint(8)        not null
 #  application_id         :bigint(8)
 #  in_reply_to_account_id :bigint(8)
+#  lat                    :decimal(17, 14)
+#  lon                    :decimal(17, 14)
 #
 
 class Status < ApplicationRecord

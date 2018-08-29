@@ -8,6 +8,7 @@ import {
   fetchComposeSuggestions,
   selectComposeSuggestion,
   changeComposeSpoilerText,
+  changeComposeGeo,
   insertEmojiCompose,
 } from '../../../actions/compose';
 
@@ -55,6 +56,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   onPaste (files) {
     dispatch(uploadCompose(files));
+  },
+
+  onPickGeo (lat, lon) {
+    dispatch(changeComposeGeo(lat, lon))
   },
 
   onPickEmoji (position, data, needsSpace) {
