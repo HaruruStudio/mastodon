@@ -46,6 +46,7 @@
 #  featured_collection_url :string
 #  fields                  :jsonb
 #  actor_type              :string
+#  avatar_model            :binary
 #
 
 class Account < ApplicationRecord

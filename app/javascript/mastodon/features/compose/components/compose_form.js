@@ -17,6 +17,10 @@ import { isMobile } from '../../../is_mobile';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
 import { countableText } from '../util/counter';
+import { uploadCompose } from './../../../actions/compose'
+import LocationPicker from 'react-location-picker';
+import ReactModal from 'react-modal';
+import IconButton from '../../../components/icon_button';
 
 const allowedAroundShortCode = '><\u0085\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029\u0009\u000a\u000b\u000c\u000d';
 
@@ -27,8 +31,25 @@ const messages = defineMessages({
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
 });
 
+const defaultPosition = {
+  lat: 35.685175,
+  lng: 139.7528
+};
+
 @injectIntl
 export default class ComposeForm extends ImmutablePureComponent {
+  state = {
+    displayColorPicker: false,
+    color: {
+      r: '40',
+      g: '44',
+      b: '55',
+      a: '1',
+    },
+    address: '',
+    position: '',
+    showModal: false,
+  };
 
   static propTypes = {
     intl: PropTypes.object.isRequired,
@@ -50,6 +71,7 @@ export default class ComposeForm extends ImmutablePureComponent {
     onSuggestionSelected: PropTypes.func.isRequired,
     onChangeSpoilerText: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
+    onPickGeo: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
@@ -83,8 +105,8 @@ export default class ComposeForm extends ImmutablePureComponent {
     if (is_submitting || is_uploading || length(fulltext) > 500 || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia)) {
       return;
     }
-
     this.props.onSubmit();
+    this.handleLocationClear();
   }
 
   onSuggestionsClearRequested = () => {
@@ -152,8 +174,26 @@ export default class ComposeForm extends ImmutablePureComponent {
     this.props.onPickEmoji(position, data, needsSpace);
   }
 
+  handleLocationChange = ({position, address}) => {
+    this.setState({ position, address });
+    this.props.onPickGeo(position.lat, position.lng);
+  }
+
+  handleLocationClear = () => {
+    this.setState({ position: '', address: '' });
+    this.props.onPickGeo(null, null);
+  }
+
+  handleOpenModal = () =>  {
+    this.setState({ showModal: true });
+  }
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  }
+
   render () {
-    const { intl, onPaste, showSearch, anyMedia } = this.props;
+    const { intl, onPaste, onPickGeo,showSearch, anyMedia } = this.props;
     const disabled = this.props.is_submitting;
     const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
     const disabledButton = disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
@@ -174,7 +214,7 @@ export default class ComposeForm extends ImmutablePureComponent {
         <div className={`spoiler-input ${this.props.spoiler ? 'spoiler-input--visible' : ''}`}>
           <label>
             <span style={{ display: 'none' }}>{intl.formatMessage(messages.spoiler_placeholder)}</span>
-            <input placeholder={intl.formatMessage(messages.spoiler_placeholder)} value={this.props.spoiler_text} onChange={this.handleChangeSpoilerText} onKeyDown={this.handleKeyDown} type='text' className='spoiler-input__input'  id='cw-spoiler-input' ref={this.setSpoilerText} />
+            <input placeholder={intl.formatMessage(messages.spoiler_placeholder)} value={this.props.spoiler_text} onChange={this.handleChangeSpoilerText} onKeyDown={this.handleKeyDown} type='text' className='spoiler-input__input' id='cw-spoiler-input' ref={this.setSpoilerText} />
           </label>
         </div>
 
@@ -193,7 +233,6 @@ export default class ComposeForm extends ImmutablePureComponent {
             onPaste={onPaste}
             autoFocus={!showSearch && !isMobile(window.innerWidth)}
           />
-
           <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
         </div>
 
@@ -203,6 +242,7 @@ export default class ComposeForm extends ImmutablePureComponent {
 
         <div className='compose-form__buttons-wrapper'>
           <div className='compose-form__buttons'>
+            <IconButton icon='map-marker' title='位置情報を追加' inverted disabled={false} onClick={this.handleOpenModal} size={20} />
             <UploadButtonContainer />
             <PrivacyDropdownContainer />
             <SensitiveButtonContainer />
@@ -210,7 +250,33 @@ export default class ComposeForm extends ImmutablePureComponent {
           </div>
           <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
         </div>
-
+        <div>
+          <ReactModal
+            isOpen={this.state.showModal}
+            contentLabel="Location Pick Modal"
+            style={{
+              overlay: {
+                zIndex: 100,
+              },
+              content: {
+                backgroundColor: '#282C37',
+              }
+            }}
+          >
+            <button onClick={this.handleCloseModal}>Close</button>
+            <h1>{this.state.address}</h1>
+            <button onClick={this.handleLocationClear}>クリア</button>
+            <div>
+              <LocationPicker
+                containerElement={<div style={{ height: '100%' }} />}
+                mapElement={<div style={{ height: '500px' }} />}
+                defaultPosition={defaultPosition}
+                onChange={this.handleLocationChange}
+              />
+            </div>
+          </ReactModal>
+        </div>
+        <h1>{this.state.address}</h1>
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>

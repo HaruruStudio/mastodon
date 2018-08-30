@@ -45,6 +45,8 @@ export const COMPOSE_COMPOSING_CHANGE = 'COMPOSE_COMPOSING_CHANGE';
 
 export const COMPOSE_EMOJI_INSERT = 'COMPOSE_EMOJI_INSERT';
 
+export const COMPOSE_GEO_CHANGE = 'COMPOSE_GEO_CHANGE';
+
 export const COMPOSE_UPLOAD_CHANGE_REQUEST     = 'COMPOSE_UPLOAD_UPDATE_REQUEST';
 export const COMPOSE_UPLOAD_CHANGE_SUCCESS     = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
 export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
@@ -117,7 +119,6 @@ export function submitCompose() {
     }
 
     dispatch(submitComposeRequest());
-
     api(getState).post('/api/v1/statuses', {
       status,
       in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
@@ -125,6 +126,8 @@ export function submitCompose() {
       sensitive: getState().getIn(['compose', 'sensitive']),
       spoiler_text: getState().getIn(['compose', 'spoiler_text'], ''),
       visibility: getState().getIn(['compose', 'privacy']),
+      lat: getState().getIn(['compose', 'lat'], null),
+      lon: getState().getIn(['compose', 'lon'], null),
     }, {
       headers: {
         'Idempotency-Key': getState().getIn(['compose', 'idempotencyKey']),
@@ -425,6 +428,7 @@ export function changeComposeSensitivity() {
   };
 };
 
+
 export function changeComposeSpoilerness() {
   return {
     type: COMPOSE_SPOILERNESS_CHANGE,
@@ -442,6 +446,14 @@ export function changeComposeVisibility(value) {
   return {
     type: COMPOSE_VISIBILITY_CHANGE,
     value,
+  };
+};
+
+export function changeComposeGeo(lat, lon) {
+  return {
+    type: COMPOSE_GEO_CHANGE,
+    lat,
+    lon,
   };
 };
 

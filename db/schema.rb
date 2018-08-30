@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.string "featured_collection_url"
     t.jsonb "fields"
     t.string "actor_type"
+    t.binary "avatar_model"
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", unique: true
     t.index ["uri"], name: "index_accounts_on_uri"
@@ -459,6 +460,8 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.bigint "account_id", null: false
     t.bigint "application_id"
     t.bigint "in_reply_to_account_id"
+    t.decimal "lat", precision: 17, scale: 14
+    t.decimal "lon", precision: 17, scale: 14
     t.index ["account_id", "id", "visibility", "updated_at"], name: "index_statuses_20180106", order: { id: :desc }
     t.index ["in_reply_to_id"], name: "index_statuses_on_in_reply_to_id"
     t.index ["reblog_of_id", "account_id"], name: "index_statuses_on_reblog_of_id_and_account_id"
@@ -537,6 +540,8 @@ ActiveRecord::Schema.define(version: 2018_08_14_171349) do
     t.bigint "invite_id"
     t.string "remember_token"
     t.string "chosen_languages", array: true
+    t.string "provider"
+    t.string "uid"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
